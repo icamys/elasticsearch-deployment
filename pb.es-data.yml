@@ -4,28 +4,24 @@
   roles:
     - { role: elastic.elasticsearch }
   vars:
+    es_heap_size: "{{ es_memory_mb }}m"
     es_data_dirs:
       - "/opt/elasticsearch"
     es_config:
-      es_heap_size: "{{ es_memory_mb }}m"
       cluster.name: "test-cluster"
       cluster.initial_master_nodes: "{{ groups['master_nodes'] }}"
       discovery.seed_hosts: "{{ groups['master_nodes'] | join(',') }}"
       http.port: 9200
-#      transport.port: 9300
       node.data: true
       node.master: false
       bootstrap.memory_lock: false
       network.host: 0.0.0.0
-
-      # Change after data load
-#      index.refresh_interval: -1
-#      index.number_of_replicas: 0
     es_major_version: "7.x"
+    es_version: "7.2.0"
     es_plugins:
       - plugin: ingest-attachment
     es_api_basic_auth_username: elastic
-    es_api_basic_auth_password: changeme
+    es_api_basic_auth_password: "{{ lookup('password', 'credentials/elasticsearch/basic_auth/elastic chars=ascii_letters,digits length=32') }}"
 
   pre_tasks:
     - name: Calculate memory for elasticsearch (half of total memory)

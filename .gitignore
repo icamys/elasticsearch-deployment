@@ -1,3 +1,4 @@
 /.idea/
 inventory.yml
 /roles/
+/credentials/

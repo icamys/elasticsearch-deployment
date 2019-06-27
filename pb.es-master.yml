@@ -10,7 +10,6 @@
       cluster.initial_master_nodes: "{{ groups['master_nodes'] }}"
       discovery.seed_hosts: "{{ groups['master_nodes'] | join(',') }}"
       http.port: 9200
-#      transport.port: 9300
       node.name: "{{ ansible_default_ipv4.address }}"
       node.data: false
       node.master: true
@@ -21,7 +20,7 @@
     es_plugins:
       - plugin: ingest-attachment
     es_api_basic_auth_username: elastic
-    es_api_basic_auth_password: changeme
+    es_api_basic_auth_password: "{{ lookup('password', 'credentials/elasticsearch/basic_auth/elastic chars=ascii_letters,digits length=32') }}"
 
   pre_tasks:
     - name: Calculate memory for elasticsearch (half of total memory)
