@@ -2,6 +2,8 @@
 
 Deploy elasticsearch cluster using ansible.
 
+Tested on ansible 2.8.1, python version = 3.6.8
+
 Deployment steps:
 
 1. Install required roles:
