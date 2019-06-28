@@ -21,3 +21,5 @@ Deployment steps:
 1. Deploy elasticsearch data servers:
 
         $ ansible-playbook -i inventory.yml pb.es-data.yml
+
+1. Credentials are created in new directory `./credentials` in deployment process
