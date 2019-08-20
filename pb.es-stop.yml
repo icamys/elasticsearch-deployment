@@ -1,0 +1,9 @@
+---
+- name: Elasticsearch | Stop service
+  hosts: all_nodes
+  gather_facts: no
+  tasks:
+    - name: Stop elasticsearch service
+      service:
+        name: elasticsearch
+        state: stopped

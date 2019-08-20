@@ -1,0 +1,9 @@
+---
+- name: Elasticsearch | Start service
+  hosts: all_nodes
+  gather_facts: no
+  tasks:
+    - name: Start elasticsearch service
+      service:
+        name: elasticsearch
+        state: started

@@ -1,0 +1,26 @@
+---
+# Certificate files are expected to be present in ./certs/ directory
+# At the moment no ssl cert generation is present in ansible role
+#   so these files should be generated manually on a server with elasticsearch installed.
+# See security guide here:
+# https://www.elastic.co/blog/elasticsearch-security-configure-tls-ssl-pki-authentication
+- name: Elasticsearch | Copy certificates
+  hosts: all_nodes
+  gather_facts: no
+  tasks:
+    - name: Create sub-directory called 'certs' located within the 'config'
+      file:
+        state: directory
+        path: /etc/elasticsearch/certs
+        owner: elasticsearch
+        group: elasticsearch
+
+    - name: Copy certificate files
+      copy:
+        src: "./certs/{{ item }}"
+        dest: /etc/elasticsearch/certs/
+        owner: elasticsearch
+        group: elasticsearch
+      with_items:
+        - elastic-certificates.p12
+        - elastic-stack-ca.p12

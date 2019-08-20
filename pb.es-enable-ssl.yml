@@ -1,0 +1,15 @@
+---
+- name: Elasticsearch | Enable ssl
+  hosts: all_nodes
+  gather_facts: no
+  tasks:
+    - name: Enable ssl transport
+      lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        state: present
+        line: "{{ item }}"
+      with_items:
+        - "xpack.security.transport.ssl.enabled: true"
+        - "xpack.security.transport.ssl.verification_mode: certificate"
+        - "xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12"
+        - "xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12"
